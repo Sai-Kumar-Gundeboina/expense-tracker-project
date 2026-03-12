@@ -1,1 +1,138 @@
 
+Step 1: Database setup & Schema setup
+Folder creation:
+    => mkdir backend
+    => mkdir frontend
+    => mkdir database
+
+Change the directory to database
+    => cd database
+
+create database file
+    => touch expenses.db
+
+open sqlite db:
+    => sqlite3 expenses.db
+
+Users table:
+    => CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+categories table:
+
+    => CREATE TABLE categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+expenses table:
+
+    => CREATE TABLE expenses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount REAL NOT NULL,
+    description TEXT,
+    category_id INTEGER,
+    user_id INTEGER,
+    expense_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+to show tables
+    => .tables
+to show schema
+    => .schema expenses
+
+insert data:
+    => INSERT INTO categories(name) VALUES ('Food');
+    => INSERT INTO categories(name) VALUES ('Travel');
+    => INSERT INTO categories(name) VALUES ('Shopping');
+
+Step 2: API Design
+Backend Responsibilities:
+    Register new users: /register       (POST)
+    Login users:        /login          (POST)
+    Add expenses        /expenses       (POST)
+    Fetch user expenses /expenses       (GET)
+    Update expenses     /expenses/{id}  (PUT)
+    Delete expenses     /expenses/{id}  (DELETE)
+
+    
+    1. POST /register
+        Body:
+            {
+                "name": "Sai Kumar",
+                "email": "sai@gmail.com",
+                "password": "123456"
+            }
+        Response:
+            {
+                message: "User created successfully"
+            }
+    
+    2. POST /login
+        Body:
+            {
+                "email": "sai@gmail.com",
+                "password": "123456"
+            }
+        Response:
+            {
+                "user_id": 1,
+                "message": "Login successful"
+            }
+    3. POST /expenses
+        Body:
+            {
+                "user_id": 1,
+                "amount": 250,
+                "category_id": 1,
+                "description": "Lunch",
+                "expense_date": "2026-03-12"
+            }
+        Response:
+            {
+                "message": "Expense added"
+            }
+    4. GET /expenses?user_id=1
+        Response:
+            [
+                {
+                    "id":1,
+                    "amount":250,
+                    "category":"Food",
+                    "description":"Lunch"
+                }
+            ]
+    5. PUT /expenses/1
+        Body:
+            {
+                "amount":300
+            }
+        Response:
+            {
+                "message":"successfully updates expense"
+            }
+    6. DELETE /expenses/1
+        Response:
+            {
+                "message":"successfully deleted expense"
+            }
+
+Step 3: Backend setup
+    - create a virtual environment:
+        => python3 -m venv venv
+    - activate virtual environment:
+        => source venv/bin/activate
+    - install required packages
+        => pip install fastapi uvicorn sqlalchemy
+    - save depenpencies in requirements.txt
+        => pip freeze > requirements.txt
+Step 4:
+    
