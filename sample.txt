@@ -135,4 +135,7 @@ Step 3: Backend setup
     - save depenpencies in requirements.txt
         => pip freeze > requirements.txt
 Step 4:
-    
+    - creation of database.py   (database connection)
+    - creation of models.py     (models describes database structure)
+    - creation of schemas.py    (bridge between API <-> backend)
+    - 
