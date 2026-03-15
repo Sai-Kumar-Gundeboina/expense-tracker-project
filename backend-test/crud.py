@@ -16,3 +16,39 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def get_user_by_email(db: Session, email:str):
     return db.query(models.User).filter(models.User.email== email).first()
+
+def create_expense(db: Session, expense: schemas.ExpenseCreate):
+    new_expense = models.Expense(
+        amount=expense.amount,
+        description=expense.description,
+        category_id=expense.category_id,
+        user_id=expense.user_id,
+        expense_date=expense.expense_date
+    )
+    db.add(new_expense)
+    db.commit()
+    db.refresh(new_expense)
+
+    return new_expense
+
+def get_expense_by_user(db: Session, user_id: int):
+    return db.query(model.Expense).filter(models.Expense.user_id == user_id).all()
+
+def delete_expense(db: Session, expense_id: int):
+    expense = db.query(model.Expense).filter(models.Expense.expense_id == expense_id).first()
+
+    if expense:
+        db.delete(expense)
+        db.commit()
+
+    return expense
+
+def update_expense(db: Session, expense_id: int, amount: float):
+    expense = db.query(model.Expense).filter(models.Expense.expense_id == expense_id).first()
+
+    if expense:
+        expense.amount = amount
+        db.commit()
+        db.refresh(expense)
+        
+    return expense
