@@ -32,3 +32,6 @@ class ExpenseResponse(BaseModel):
     category_id: int
     user_id: int
     expense_date: date
+
+class ExpenseUpdate(BaseModel):
+    amount: float

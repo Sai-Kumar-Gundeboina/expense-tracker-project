@@ -134,6 +134,8 @@ Step 3: Backend setup
         => pip install fastapi uvicorn sqlalchemy
     - save depenpencies in requirements.txt
         => pip freeze > requirements.txt
+    - to run server
+        => uvicorn main:app --reload
         
 Step 4:
     - creation of database.py   (database connection)
