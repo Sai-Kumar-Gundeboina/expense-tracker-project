@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from database import engine
 from sqlalchemy.orm import Session
+from security import verify_password, create_access_token, get_current_user
 
 import models
 import crud
@@ -31,17 +32,30 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, user.email)
 
-    if db_user and db_user.password == user.password:
-        return {"message": "Login Successful", "user_id": db_user.id}
+    if not db_user:
+        return {"message": "User not found"}
     
-    return {"message": "Invalid Credentials"}
+    if not verify_password(user.password, db_user.password):
+        return {"message": "Invalid password"}
+    
+    token = create_access_token({"user_id": db_user.id})
 
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }
+    # return {"message": "Login Successful", "user_id": db_user.id}
+    
 @app.post("/expense")
 def create_expense(expense: schemas.ExpenseCreate, db: Session = Depends(get_db)):
     return crud.create_expense(db, expense)
 
-@app.get("/expense/{user_id}")
-def get_expense_by_user(user_id: int, db: Session = Depends(get_db)):
+# @app.get("/expense/{user_id}")
+# def get_expense_by_user(user_id: int, db: Session = Depends(get_db)):
+#     return crud.get_expense_by_user(db, user_id)
+
+@app.get("/expense")
+def get_expense_by_user(user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
     return crud.get_expense_by_user(db, user_id)
 
 @app.put("/expense/{expense_id}")

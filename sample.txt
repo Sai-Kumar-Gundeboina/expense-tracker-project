@@ -162,3 +162,17 @@ Step 4:
     - creation of schemas.py    (bridge between API <-> backend)
     - creation of crud.py       (functions to make crud operations)
     - create routing in main.py
+
+step - 5:
+    - test whether all the apis are working as per requirement or not (hint use swagger docs for testing)
+
+step - 6:
+    - Password hashing
+    - package used: bcrypt
+        => pip install passlib[bcrypt]==1.7.4 bcrypt==4.0.1
+    - create security.py file
+    - add code for hashing the password and verifying the password
+step - 7:
+    - JWT Authentication
+    -   packages used: JWT library
+        => pip install python-jose
