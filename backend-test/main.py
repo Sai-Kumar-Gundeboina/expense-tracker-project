@@ -51,3 +51,11 @@ def update_expense(expense_id: int, expense: schemas.ExpenseUpdate, db: Session 
 @app.delete("/expense/{expense_id}")
 def delete_expense(expense_id: int, db: Session = Depends(get_db)):
     return crud.delete_expense(db, expense_id)
+
+@app.post("/category")
+def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
+    return crud.create_category(db, category.name)
+
+@app.get("/category/{category_id}")
+def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
+    return crud.get_category_by_id(db, category_id)

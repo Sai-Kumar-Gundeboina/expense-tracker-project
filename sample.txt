@@ -124,6 +124,25 @@ Backend Responsibilities:
             {
                 "message":"successfully deleted expense"
             }
+    7. POST /category
+        Body:
+            {
+                "name": "FOOD"
+            }
+        Response:
+            {
+                "message": "successfully added category"
+            }
+    8. GET /category
+        Body:
+            {
+                "id":1
+            }
+        Response:
+            {
+                "id": 1,
+                "name": "FOOD"
+            }
 
 Step 3: Backend setup
     - create a virtual environment:
@@ -142,3 +161,4 @@ Step 4:
     - creation of models.py     (models describes database structure)
     - creation of schemas.py    (bridge between API <-> backend)
     - creation of crud.py       (functions to make crud operations)
+    - create routing in main.py

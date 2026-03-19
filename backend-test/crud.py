@@ -52,3 +52,15 @@ def update_expense(db: Session, expense_id: int, amount: float):
         db.refresh(expense)
         
     return expense
+def create_category(db: Session, category_name: str):
+    new_category = models.Category(
+        name = category_name
+    )
+    db.add(new_category)
+    db.commit()
+    db.refresh(new_category)
+
+    return new_category
+
+def get_category_by_id(db:Session, category_id: int):
+    return db.query(models.Category).filter(models.Category.id == category_id).first()
