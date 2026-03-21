@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 from database import engine
 from sqlalchemy.orm import Session
 from security import verify_password, create_access_token, get_current_user
+from fastapi.security import OAuth2PasswordRequestForm
 
 import models
 import crud
@@ -29,7 +30,10 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db, user)
 
 @app.post("/login")
-def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
+def login(
+   user: schemas.UserLogin, 
+    db: Session = Depends(get_db)):
+
     db_user = crud.get_user_by_email(db, user.email)
 
     if not db_user:
@@ -55,7 +59,7 @@ def create_expense(expense: schemas.ExpenseCreate, db: Session = Depends(get_db)
 #     return crud.get_expense_by_user(db, user_id)
 
 @app.get("/expense")
-def get_expense_by_user(user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+def get_expense_by_user(user_id: int, db: Session = Depends(get_db)): #= Depends(get_current_user)
     return crud.get_expense_by_user(db, user_id)
 
 @app.put("/expense/{expense_id}")

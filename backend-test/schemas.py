@@ -6,9 +6,8 @@ class UserCreate(BaseModel):
     email: str
     password: str
 
-class UserResponse(BaseModel):
-    id: int
-    name: str
+class UserLogin(BaseModel):
+    password: str
     email: str
 
 class CategoryCreate(BaseModel):
