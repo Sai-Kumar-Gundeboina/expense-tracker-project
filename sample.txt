@@ -176,3 +176,10 @@ step - 7:
     - JWT Authentication
     -   packages used: JWT library
         => pip install python-jose
+
+Frontend building:-
+    1. create react app using command:
+        => npx create-react-app expense-tracker-frontend
+        => cd expense-tracker-frontend
+        => npm start
+        => npm install (for installing all the required packages)
