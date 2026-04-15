@@ -5,7 +5,7 @@ import Register from "./Pages/register"
 function App() {
   return (
     <div>
-      <Register />
+      <Register name="Sai kumar"/>
     </div>
   );
 }

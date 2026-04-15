@@ -182,4 +182,4 @@ Frontend building:-
         => npx create-react-app expense-tracker-frontend
         => cd expense-tracker-frontend
         => npm start
-        => npm install (for installing all the required packages)
+        => npm install (for installing all the required packages while deploying at new environment)

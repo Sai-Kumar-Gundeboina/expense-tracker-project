@@ -1,6 +1,6 @@
 
 
-function Register(){
-    return <h1>hello</h1>
+function Register(props){
+    return <h1>hello, {props.name}</h1>
 }
 export default Register;
